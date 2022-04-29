@@ -1,0 +1,32 @@
+{
+    "name": "gilbitron/staticus-framework",
+    "description": "Staticus Framework",
+    "authors": [
+        {
+            "name": "Gilbert Pellegrom",
+            "email": "gilbert@pellegrom.me"
+        }
+    ],
+    "require": {
+        "erusev/parsedown": "^1.7",
+        "illuminate/collections": "^9",
+        "illuminate/filesystem": "^9",
+        "illuminate/support": "^9",
+        "illuminate/view": "^9",
+        "spatie/data-transfer-object": "^3.7",
+        "spatie/yaml-front-matter": "^2.0",
+        "symfony/console": "^6",
+        "symfony/finder": "^6"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Staticus\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
