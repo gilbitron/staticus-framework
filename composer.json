@@ -1,6 +1,7 @@
 {
     "name": "gilbitron/staticus-framework",
     "description": "Staticus Framework",
+    "license": "MIT",
     "authors": [
         {
             "name": "Gilbert Pellegrom",
