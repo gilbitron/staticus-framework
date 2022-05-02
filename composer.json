@@ -8,6 +8,7 @@
             "email": "gilbert@pellegrom.me"
         }
     ],
+    "bin": ["bin/staticus"],
     "require": {
         "erusev/parsedown": "^1.7",
         "illuminate/collections": "^9",

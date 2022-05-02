@@ -1,0 +1,12 @@
+#!/usr/bin/env php
+<?php
+
+require $_composer_autoload_path ?? __DIR__ . '/../vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+
+$application = new Application('Staticus', '0.1.0');
+
+$application->add(new \Staticus\Commands\BuildCommand(getcwd()));
+
+$application->run();
