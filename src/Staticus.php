@@ -145,7 +145,7 @@ class Staticus
         }
 
         $output = $this->renderer->render($view, [
-            'config'     => $this->config,
+            'staticus'   => new StaticusView($this->environment, $this->config),
             'page'       => $page,
             'pagination' => $pagination,
         ]);
