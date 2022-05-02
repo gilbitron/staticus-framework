@@ -36,6 +36,7 @@ class BuildCommand extends Command
         $this
             ->setDescription('Builds the site')
             ->addArgument('environment', InputArgument::OPTIONAL, 'Optional environment', 'local')
+            ->addOption('output', 'o', InputOption::VALUE_OPTIONAL, 'Optional output directory');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -45,14 +46,23 @@ class BuildCommand extends Command
         $startTime = microtime(true);
 
         $environment = $input->getArgument('environment');
+        $outputDir   = $input->getOption('output');
 
-        $staticus = new Staticus($this->basePath, $environemnt);
-        $staticus = new Staticus($this->basePath, $environment);
+        if ($outputDir && empty(realpath($outputDir))) {
+            $output->writeln('<error>Output directory does not exist</error>');
+
+            return Command::FAILURE;
+        }
+
+        $output->writeln("Environment: {$environment}");
+        $output->writeln('Output directory: ' . ($outputDir ?: 'dist'));
+
+        $staticus = new Staticus($this->basePath, $environment, $outputDir);
         $staticus->build();
 
         $buildTime = number_format(((microtime(true) - $startTime) * 1000), 2);
 
-        $output->writeln("\n<info>Site built in {$buildTime}ms</info>");
+        $output->writeln("<info>Site built in {$buildTime}ms</info>");
 
         return Command::SUCCESS;
     }

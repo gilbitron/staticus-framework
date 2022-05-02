@@ -19,6 +19,11 @@ class Staticus
     protected $environment;
 
     /**
+     * @var string
+     */
+    protected $outputDir;
+
+    /**
      * @var array
      */
     protected $config;
@@ -31,12 +36,14 @@ class Staticus
     /**
      * @param string $basePath
      * @param string $environment
+     * @param string|null $outputDir
      * @return void
      */
-    public function __construct($basePath, $environment = 'local')
+    public function __construct($basePath, $environment = 'local', $outputDir = null)
     {
         $this->basePath    = $basePath;
         $this->environment = $environment;
+        $this->outputDir   = $outputDir;
     }
 
     /**
@@ -59,7 +66,7 @@ class Staticus
 
         $content = $this->config['content'] ?? [];
 
-        $this->cleanDist();
+        $this->cleanOutput();
 
         foreach ($content as $contentKey => $contentItem) {
             if ($contentItem instanceof Page) {
@@ -99,9 +106,9 @@ class Staticus
     /**
      * @return void
      */
-    protected function cleanDist()
+    protected function cleanOutput()
     {
-        $dir = $this->basePath . '/dist';
+        $dir = $this->getOutputDir();
 
         if (!is_dir($dir)) {
             mkdir($dir);
@@ -132,7 +139,7 @@ class Staticus
      */
     protected function renderPage(Page $page, $view, $pagination = null)
     {
-        $dir = rtrim($this->basePath . '/dist/' . $page->path, '/');
+        $dir = rtrim($this->getOutputDir() . '/' . $page->path, '/');
         if (!is_dir($dir)) {
             mkdir($dir, 0777, true);
         }
@@ -144,5 +151,17 @@ class Staticus
         ]);
 
         file_put_contents("{$dir}/index.html", $output);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getOutputDir()
+    {
+        if ($this->outputDir) {
+            return realpath($this->outputDir);
+        }
+
+        return $this->basePath . '/dist';
     }
 }
