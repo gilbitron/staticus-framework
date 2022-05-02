@@ -16,10 +16,22 @@ class StaticusView
      */
     protected $config;
 
-    public function __construct($environment, $config)
+    /**
+     * @var string
+     */
+    protected $outputDir;
+
+    /**
+     * @param string $environment
+     * @param array $config
+     * @param string $outputDir
+     * @return void
+     */
+    public function __construct($environment, $config, $outputDir)
     {
         $this->environment = $environment;
         $this->config      = $config;
+        $this->outputDir   = $outputDir;
     }
 
     /**
@@ -52,5 +64,24 @@ class StaticusView
     public function content($type)
     {
         return $this->config("content.{$type}");
+    }
+
+    /**
+     * @param mixed $path
+     * @return mixed
+     */
+    public function asset($path)
+    {
+        $path = '/' . ltrim($path, '/');
+
+        if (file_exists("{$this->outputDir}/mix-manifest.json")) {
+            $manifest = json_decode(file_get_contents("{$this->outputDir}/mix-manifest.json"), true);
+
+            if (isset($manifest[$path])) {
+                return $manifest[$path];
+            }
+        }
+
+        return $path;
     }
 }

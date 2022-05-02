@@ -122,7 +122,10 @@ class Staticus
         );
 
         foreach ($files as $fileinfo) {
-            if (Str::startsWith(str_replace($dir, '', $fileinfo->getPathname()), '/assets')) {
+            if (
+                Str::startsWith(str_replace($dir, '', $fileinfo->getPathname()), '/assets') ||
+                Str::startsWith(str_replace($dir, '', $fileinfo->getPathname()), '/mix-manifest.json')
+            ) {
                 continue;
             }
 
@@ -145,7 +148,7 @@ class Staticus
         }
 
         $output = $this->renderer->render($view, [
-            'staticus'   => new StaticusView($this->environment, $this->config),
+            'staticus'   => new StaticusView($this->environment, $this->config, $this->getOutputDir()),
             'page'       => $page,
             'pagination' => $pagination,
         ]);
