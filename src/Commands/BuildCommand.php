@@ -35,7 +35,7 @@ class BuildCommand extends Command
     {
         $this
             ->setDescription('Builds the site')
-            ->addArgument('environemnt', InputArgument::OPTIONAL, 'Optional environment', 'local');
+            ->addArgument('environment', InputArgument::OPTIONAL, 'Optional environment', 'local')
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -44,9 +44,10 @@ class BuildCommand extends Command
 
         $startTime = microtime(true);
 
-        $environemnt = $input->getArgument('environemnt');
+        $environment = $input->getArgument('environment');
 
         $staticus = new Staticus($this->basePath, $environemnt);
+        $staticus = new Staticus($this->basePath, $environment);
         $staticus->build();
 
         $buildTime = number_format(((microtime(true) - $startTime) * 1000), 2);

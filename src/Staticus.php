@@ -16,7 +16,7 @@ class Staticus
     /**
      * @var string
      */
-    protected $environemnt;
+    protected $environment;
 
     /**
      * @var array
@@ -30,13 +30,13 @@ class Staticus
 
     /**
      * @param string $basePath
-     * @param string $environemnt
+     * @param string $environment
      * @return void
      */
-    public function __construct($basePath, $environemnt = 'local')
+    public function __construct($basePath, $environment = 'local')
     {
         $this->basePath    = $basePath;
-        $this->environemnt = $environemnt;
+        $this->environment = $environment;
     }
 
     /**
@@ -53,8 +53,8 @@ class Staticus
         if (file_exists("{$this->basePath}/config.php")) {
             $this->config = require "{$this->basePath}/config.php";
         }
-        if (file_exists("{$this->basePath}/config.{$this->environemnt}.php")) {
-            $this->config = array_merge($this->config, require "{$this->basePath}/config.{$this->environemnt}.php");
+        if (file_exists("{$this->basePath}/config.{$this->environment}.php")) {
+            $this->config = array_merge($this->config, require "{$this->basePath}/config.{$this->environment}.php");
         }
 
         $content = $this->config['content'] ?? [];
