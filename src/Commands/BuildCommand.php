@@ -4,7 +4,9 @@ namespace Staticus\Commands;
 
 use Staticus\Staticus;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class BuildCommand extends Command
@@ -31,7 +33,9 @@ class BuildCommand extends Command
 
     protected function configure()
     {
-        $this->setDescription('Builds the site');
+        $this
+            ->setDescription('Builds the site')
+            ->addArgument('environemnt', InputArgument::OPTIONAL, 'Optional environment', 'local');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -40,7 +44,9 @@ class BuildCommand extends Command
 
         $startTime = microtime(true);
 
-        $staticus = new Staticus($this->basePath);
+        $environemnt = $input->getArgument('environemnt');
+
+        $staticus = new Staticus($this->basePath, $environemnt);
         $staticus->build();
 
         $buildTime = number_format(((microtime(true) - $startTime) * 1000), 2);
