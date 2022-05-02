@@ -85,8 +85,8 @@ class Staticus
                         'path'  => $contentItem->getBasePath(),
                         'title' => 'Page 1',
                     ]),
-                    $contentKey,
                     $collection->pagination(1, $contentItem->getBasePath()),
+                    $contentItem->singleView ?: $contentKey,
                 );
 
                 for ($i = 1; $i <= $collection->totalPages(); $i++) {
@@ -95,8 +95,8 @@ class Staticus
                             'path'  => $contentItem->getBasePath() . "/page/{$i}",
                             'title' => "Page {$i}",
                         ]),
-                        $contentKey,
                         $collection->pagination($i, $contentItem->getBasePath()),
+                        $contentItem->collectionView ?: $contentKey,
                     );
                 }
             }

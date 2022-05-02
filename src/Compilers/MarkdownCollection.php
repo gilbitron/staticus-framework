@@ -7,7 +7,7 @@ use Spatie\YamlFrontMatter\YamlFrontMatter;
 use Staticus\Page;
 use Symfony\Component\Finder\Finder;
 
-class MarkdownCompiler extends Compiler
+class MarkdownCollection extends Compiler
 {
     /**
      * @var string
@@ -15,22 +15,25 @@ class MarkdownCompiler extends Compiler
     protected $contentPath;
 
     /**
-     * @param string $path
      * @param string $contentPath
-     * @return void
+     * @return $this
      */
-    public function __construct($path, $contentPath)
+    public function fromMarkdownFiles($contentPath)
     {
-        parent::__construct($path);
-
         $this->contentPath = $contentPath;
+
+        return $this;
     }
 
     /**
      * @return $this
      */
-    public function getContent()
+    public function fetchContent()
     {
+        if (empty($this->contentPath)) {
+            throw new \Exception('Content path is not set');
+        }
+
         $finder = new Finder();
         $files  = $finder->files()
             ->in($this->contentPath)

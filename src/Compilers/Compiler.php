@@ -12,24 +12,65 @@ abstract class Compiler
     public $path;
 
     /**
+     * @var string|null
+     */
+    public $singleView = null;
+
+    /**
+     * @var string|null
+     */
+    public $collectionView = null;
+
+    /**
      * @var \Staticus\Collection
      */
     protected $collection;
 
+    private function __construct()
+    {
+        //
+    }
+
     /**
      * @param string $path
-     * @return void
+     * @return self
      */
-    public function __construct($path)
+    public static function create($path)
     {
-        $this->path       = $path;
-        $this->collection = new Collection();
+        $obj = new static();
+
+        $obj->path       = $path;
+        $obj->collection = new Collection();
+
+        return $obj;
+    }
+
+    /**
+     * @param string $template
+     * @return $this
+     */
+    public function singleView($template)
+    {
+        $this->singleView = $template;
+
+        return $this;
+    }
+
+    /**
+     * @param string $template
+     * @return $this
+     */
+    public function collectionView($template)
+    {
+        $this->collectionView = $template;
+
+        return $this;
     }
 
     /**
      * @return $this
      */
-    abstract public function getContent();
+    abstract public function fetchContent();
 
     /**
      * @param string $key
