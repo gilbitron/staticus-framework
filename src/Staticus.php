@@ -85,18 +85,18 @@ class Staticus
                         'path'  => $contentItem->getBasePath(),
                         'title' => 'Page 1',
                     ]),
-                    $collection->pagination(1, $contentItem->getBasePath()),
                     $contentItem->singleView ?: $contentKey,
+                    $collection->pagination(1, $contentItem->getBasePath(), $contentItem->perPage),
                 );
 
-                for ($i = 1; $i <= $collection->totalPages(); $i++) {
+                for ($i = 1; $i <= $collection->totalPages($contentItem->perPage); $i++) {
                     $this->renderPage(
                         new Page([
                             'path'  => $contentItem->getBasePath() . "/page/{$i}",
                             'title' => "Page {$i}",
                         ]),
-                        $collection->pagination($i, $contentItem->getBasePath()),
                         $contentItem->collectionView ?: $contentKey,
+                        $collection->pagination($i, $contentItem->getBasePath(), $contentItem->perPage),
                     );
                 }
             }

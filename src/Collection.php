@@ -13,27 +13,11 @@ class Collection
     public $items;
 
     /**
-     * @var int
-     */
-    public $perPage = 10;
-
-    /**
      * @param array $items
      */
     public function __construct(array $items = [])
     {
         $this->items = new IlluminateCollection($items);
-    }
-
-    /**
-     * @param int $perPage
-     * @return $this
-     */
-    public function perPage(int $perPage)
-    {
-        $this->perPage = $perPage;
-
-        return $this;
     }
 
     /**
@@ -75,31 +59,33 @@ class Collection
     /**
      * @param int $page
      * @param string $path
+     * @param int $perPage
      * @return object
      */
-    public function pagination($page = 1, $path = '')
+    public function pagination($page = 1, $path = '', $perPage = 10)
     {
-        $items = $this->items->forPage($page, $this->perPage);
+        $items = $this->items->forPage($page, $perPage);
 
         return (object) [
             'items'         => $items->all(),
             'currentPage'   => $page,
-            'perPage'       => $this->perPage,
-            'lastPage'      => $this->totalPages(),
+            'perPage'       => $perPage,
+            'lastPage'      => $this->totalPages($perPage),
             'total'         => $this->items->count(),
             'path'          => $path,
             'firstPagePath' => "{$path}/page/1",
-            'lastPagePath'  => "{$path}/page/{$this->totalPages()}",
-            'nextPagePath'  => $page < $this->totalPages() ? $path . '/page/' . ($page + 1) : null,
+            'lastPagePath'  => "{$path}/page/{$this->totalPages($perPage)}",
+            'nextPagePath'  => $page < $this->totalPages($perPage) ? $path . '/page/' . ($page + 1) : null,
             'prevPagePath'  => $page > 1 ? $path . '/page/' . ($page - 1) : null,
         ];
     }
 
     /**
+     * @param int $perPage
      * @return int
      */
-    public function totalPages()
+    public function totalPages($perPage)
     {
-        return (int) ceil($this->items->count() / $this->perPage);
+        return (int) ceil($this->items->count() / $perPage);
     }
 }

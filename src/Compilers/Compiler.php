@@ -22,6 +22,11 @@ abstract class Compiler
     public $collectionView = null;
 
     /**
+     * @var int
+     */
+    public $perPage = 10;
+
+    /**
      * @var \Staticus\Collection
      */
     protected $collection;
@@ -63,6 +68,17 @@ abstract class Compiler
     public function collectionView($template)
     {
         $this->collectionView = $template;
+
+        return $this;
+    }
+
+    /**
+     * @param int $perPage
+     * @return $this
+     */
+    public function perPage(int $perPage)
+    {
+        $this->perPage = $perPage;
 
         return $this;
     }
