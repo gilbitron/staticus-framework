@@ -111,7 +111,7 @@ class Staticus
         $dir = $this->getOutputDir();
 
         if (!is_dir($dir)) {
-            mkdir($dir);
+            @mkdir($dir);
 
             return;
         }
@@ -130,7 +130,7 @@ class Staticus
             }
 
             $todo = ($fileinfo->isDir() ? 'rmdir' : 'unlink');
-            $todo($fileinfo->getRealPath());
+            @$todo($fileinfo->getRealPath());
         }
     }
 
@@ -144,7 +144,7 @@ class Staticus
     {
         $dir = rtrim($this->getOutputDir() . '/' . $page->path, '/');
         if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
+            @mkdir($dir, 0777, true);
         }
 
         $output = $this->renderer->render($view, [
