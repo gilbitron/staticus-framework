@@ -5,8 +5,8 @@ if (isset($_composer_autoload_path)) {
     require $_composer_autoload_path;
 } elseif (file_exists(__DIR__ . '/../vendor/autoload.php')) {
     require __DIR__ . '/../vendor/autoload.php';
-} elseif (file_exists(getcwd() . '/../vendor/autoload.php')) {
-    require getcwd() . '/../vendor/autoload.php';
+} elseif (file_exists(getcwd() . '/vendor/autoload.php')) {
+    require getcwd() . '/vendor/autoload.php';
 }
 
 use Symfony\Component\Console\Application;
