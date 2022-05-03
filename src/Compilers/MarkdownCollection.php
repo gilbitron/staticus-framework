@@ -54,11 +54,11 @@ class MarkdownCollection extends Compiler
 
             $this->collection->push(
                 new Page([
-                    'path'       => $path,
-                    'title'      => $object->matter()['title'] ?? $slug,
-                    'fontMatter' => $object->matter(),
-                    'markdown'   => $object->body(),
-                    'html'       => $parsedown->text($object->body()),
+                    'path'        => $path,
+                    'title'       => $object->matter()['title'] ?? $slug,
+                    'frontMatter' => $object->matter(),
+                    'markdown'    => $object->body(),
+                    'html'        => $parsedown->text($object->body()),
                 ])
             );
         }

@@ -11,7 +11,7 @@ class Page extends DataTransferObject
 
     public string $title = '';
 
-    public array $fontMatter = [];
+    public array $frontMatter = [];
 
     public string $markdown = '';
 
@@ -24,6 +24,6 @@ class Page extends DataTransferObject
      */
     public function getFrontMatter($key, $default = null)
     {
-        return Arr::get($this->fontMatter, $key, $default);
+        return Arr::get($this->frontMatter, $key, $default);
     }
 }
