@@ -11,7 +11,7 @@ if (isset($_composer_autoload_path)) {
 
 use Symfony\Component\Console\Application;
 
-$application = new Application('Staticus', '0.2.3');
+$application = new Application('Staticus', '0.2.4');
 
 $application->add(new \Staticus\Commands\BuildCommand(getcwd()));
 
