@@ -27,6 +27,11 @@ abstract class Compiler
     public $perPage = 10;
 
     /**
+     * @var bool
+     */
+    public $withoutArchives = false;
+
+    /**
      * @var \Staticus\Collection
      */
     protected $collection;
@@ -76,9 +81,19 @@ abstract class Compiler
      * @param int $perPage
      * @return $this
      */
-    public function perPage(int $perPage)
+    public function perPage($perPage)
     {
         $this->perPage = $perPage;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function withoutArchives()
+    {
+        $this->withoutArchives = true;
 
         return $this;
     }

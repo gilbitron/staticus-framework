@@ -80,24 +80,26 @@ class Staticus
                     $this->renderPage($page, Str::singular($contentKey));
                 }
 
-                $this->renderPage(
-                    new Page([
-                        'path'  => $contentItem->getBasePath(),
-                        'title' => 'Page 1',
-                    ]),
-                    $contentItem->singleView ?: $contentKey,
-                    $collection->pagination(1, $contentItem->getBasePath(), $contentItem->perPage),
-                );
-
-                for ($i = 1; $i <= $collection->totalPages($contentItem->perPage); $i++) {
+                if (!$contentItem->withoutArchives) {
                     $this->renderPage(
                         new Page([
-                            'path'  => $contentItem->getBasePath() . "/page/{$i}",
-                            'title' => "Page {$i}",
+                            'path'  => $contentItem->getBasePath(),
+                            'title' => 'Page 1',
                         ]),
-                        $contentItem->collectionView ?: $contentKey,
-                        $collection->pagination($i, $contentItem->getBasePath(), $contentItem->perPage),
+                        $contentItem->singleView ?: $contentKey,
+                        $collection->pagination(1, $contentItem->getBasePath(), $contentItem->perPage),
                     );
+
+                    for ($i = 1; $i <= $collection->totalPages($contentItem->perPage); $i++) {
+                        $this->renderPage(
+                            new Page([
+                                'path'  => $contentItem->getBasePath() . "/page/{$i}",
+                                'title' => "Page {$i}",
+                            ]),
+                            $contentItem->collectionView ?: $contentKey,
+                            $collection->pagination($i, $contentItem->getBasePath(), $contentItem->perPage),
+                        );
+                    }
                 }
             }
         }
