@@ -77,7 +77,7 @@ class Staticus
                 $collection = $contentItem->collection();
 
                 foreach ($collection->all() as $page) {
-                    $this->renderPage($page, Str::singular($contentKey));
+                    $this->renderPage($page, $contentItem->singleView ?: Str::singular($contentKey));
                 }
 
                 if (!$contentItem->withoutArchives) {
@@ -86,7 +86,7 @@ class Staticus
                             'path'  => $contentItem->getBasePath(),
                             'title' => 'Page 1',
                         ]),
-                        $contentItem->singleView ?: $contentKey,
+                        $contentItem->collectionView ?: $contentKey,
                         $collection->pagination(1, $contentItem->getBasePath(), $contentItem->perPage),
                     );
 
